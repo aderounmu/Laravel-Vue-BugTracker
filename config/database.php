@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-$PRODUCTION_DB = parse_url(getenv("DATABASE_URL"))
+$PRODUCTION_DB = parse_url(getenv("DATABASE_URL"));
 
 return [
     /*
