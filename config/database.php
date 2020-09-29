@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-$DATABASE_URL = parse_url(' postgres://qiznqrjtaieplf:d15a12ae66b3642a7d5916bb70382dc92eac9074a732a6f6b26703d164657ab5@ec2-204-236-228-169.compute-1.amazonaws.com:5432/db6qd2abefqpoo');
+$PRODUCTION_DB = parse_url(getenv("DATABASE_URL"))
 
 return [
     /*
@@ -72,11 +72,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             //'url' => env('DATABASE_URL'),
-            'host' => $DATABASE_URL["host"],//env('DB_HOST', '127.0.0.1'),
-            'port' => $DATABASE_URL["port"],//env('DB_PORT', '5432'),
-            'database' => ltrim($DATABASE_URL["path"],"/"),//env('DB_DATABASE', 'forge'),
-            'username' => $DATABASE_URL["user"],//env('DB_USERNAME', 'forge'),
-            'password' => $DATABASE_URL["pass"],//env('DB_PASSWORD', ''),
+            'host' => $PRODUCTION_DB["host"],//env('DB_HOST', '127.0.0.1'),
+            'port' => $PRODUCTION_DB["port"],//env('DB_PORT', '5432'),
+            'database' => substr($PRODUCTION_DB["path"], 1)//ltrim($PRODUCTION_DB["path"],"/"),//env('DB_DATABASE', 'forge'),
+            'username' => $PRODUCTION_DB["user"],//env('DB_USERNAME', 'forge'),
+            'password' => $PRODUCTION_DB["pass"],//env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
