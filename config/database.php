@@ -19,8 +19,9 @@ return [
 
     /*
     *For local Development
-    'default' => env('DB_CONNECTION', 'mysql'),
+    *'default' => env('DB_CONNECTION', 'mysql'),
     */
+
     'default' => env('DB_CONNECTION', 'pgsql'),
 
 
