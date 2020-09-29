@@ -38,13 +38,13 @@ Route::get('test','API\UserController@test');
   * Project API Routes
   */
 
-Route::group(['scheme' => 'https'],function(){
+//Route::group(['scheme' => 'https'],function(){
   //list all projects 
   Route::get('project','API\ProjectController@index');
   //list a specific project
   Route::get('project/{id}','API\ProjectController@show');//->middleware(checkForAdmin::class);
 
-});
+//});
 
 
 Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
