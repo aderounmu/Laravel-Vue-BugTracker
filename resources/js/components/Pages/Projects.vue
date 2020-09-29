@@ -65,16 +65,9 @@ export default {
         },
 
         getDataAgain(){
-            // fetch('api/project/')
-            // .then((response)=>{
-            //     return response.json();
-            // })
-            // .then((data)=>{
-            //     this.projects = data.data
-            // })
-            axios.get('api/project/')
+            fetch('api/project/')
             .then((response)=>{
-                return response.json()
+                return response.json();
             })
             .then((data)=>{
                 this.projects = data.data
