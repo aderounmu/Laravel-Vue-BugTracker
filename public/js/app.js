@@ -3042,7 +3042,14 @@ __webpack_require__.r(__webpack_exports__);
     getDataAgain: function getDataAgain() {
       var _this = this;
 
-      fetch('api/project/').then(function (response) {
+      // fetch('api/project/')
+      // .then((response)=>{
+      //     return response.json();
+      // })
+      // .then((data)=>{
+      //     this.projects = data.data
+      // })
+      axios.get('api/project/').then(function (response) {
         return response.json();
       }).then(function (data) {
         _this.projects = data.data;
