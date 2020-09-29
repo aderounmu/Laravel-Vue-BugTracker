@@ -38,12 +38,16 @@ Route::get('test','API\UserController@test');
   * Project API Routes
   */
 
-//list all projects 
-Route::get('project','API\ProjectController@index');
-//list a specific project
-Route::get('project/{id}','API\ProjectController@show');//->middleware(checkForAdmin::class);
+Route::group(['scheme' => 'https'],function(){
+  //list all projects 
+  Route::get('project','API\ProjectController@index');
+  //list a specific project
+  Route::get('project/{id}','API\ProjectController@show');//->middleware(checkForAdmin::class);
 
-Route::group(['middleware' => ['auth:api']], function () {
+})
+
+
+Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
   //create a project 
   Route::post('project','API\ProjectController@store');
   //update a project 
@@ -69,12 +73,14 @@ Route::get('project/test/{id}','API\ProjectController@test');
 /**
   * Bugs  API Routes
   */
+  Route::group(['scheme' => 'https'],function(){
+    //get all the bugs in a project 
+    Route::get('project/{id}/bug','API\BugController@index');
+    //get a single bug 
+    Route::get('bug/{id}','API\BugController@show');
+  })
 
-  //get all the bugs in a project 
-  Route::get('project/{id}/bug','API\BugController@index');
-  //get a single bug 
-  Route::get('bug/{id}','API\BugController@show');
-  Route::group(['middleware' => ['auth:api']], function () {
+  Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
     //to create a new bug 
     Route::post('bug','API\BugController@store');
     //update a bug
