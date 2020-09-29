@@ -47,7 +47,7 @@ Route::get('test','API\UserController@test');
 //});
 
 
-Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
+Route::group(['middleware' => ['auth:api'],/*'scheme' => 'https']*/, function () {
   //create a project 
   Route::post('project','API\ProjectController@store');
   //update a project 
@@ -73,14 +73,14 @@ Route::get('project/test/{id}','API\ProjectController@test');
 /**
   * Bugs  API Routes
   */
-  Route::group(['scheme' => 'https'],function(){
+  //Route::group(['scheme' => 'https'],function(){
     //get all the bugs in a project 
     Route::get('project/{id}/bug','API\BugController@index');
     //get a single bug 
     Route::get('bug/{id}','API\BugController@show');
-  });
+  //});
 
-  Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
+  Route::group(['middleware' => ['auth:api'],/*'scheme' => 'https'*/], function () {
     //to create a new bug 
     Route::post('bug','API\BugController@store');
     //update a bug
