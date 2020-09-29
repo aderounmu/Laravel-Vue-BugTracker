@@ -31,7 +31,7 @@ class Project extends JsonResource
                 ProjectModel::find($this->id)->assigned_users
             ),
             'Administrators' => UserResource::collection(
-                Project::find($this->id)->assigned_users()->where('admin','=',true)->get()
+                Project::find($this->id)->assigned_users()->where('Admin','=',true)->get()
             )
         ];
     }
