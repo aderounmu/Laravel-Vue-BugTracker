@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <script> window.Laravel = { csrfToken: '{{csrf_token()}}'}</script>
     <title>Bug Tracker Application</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{secure_asset('css/app.css')}}">
 </head>
 <body>
 
@@ -15,5 +15,5 @@
         <application></application>
     </div>
 </body>
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{secure_asset('js/app.js')}}"></script>
 </html>
