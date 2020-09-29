@@ -44,7 +44,7 @@ Route::group(['scheme' => 'https'],function(){
   //list a specific project
   Route::get('project/{id}','API\ProjectController@show');//->middleware(checkForAdmin::class);
 
-})
+});
 
 
 Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
@@ -78,7 +78,7 @@ Route::get('project/test/{id}','API\ProjectController@test');
     Route::get('project/{id}/bug','API\BugController@index');
     //get a single bug 
     Route::get('bug/{id}','API\BugController@show');
-  })
+  });
 
   Route::group(['middleware' => ['auth:api'],'scheme' => 'https'], function () {
     //to create a new bug 
