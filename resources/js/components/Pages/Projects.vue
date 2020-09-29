@@ -13,6 +13,9 @@
                     <!-- Project cards go here-->
                   <div class="card-containers">
                       <div class="container-content">
+                             <div class="emptyProjects" v-if="projects.length === 0">
+                                NO Projects Here
+                            </div>
                           <ProjectCard 
                           class='project-card'
                           v-for="project in projects"
@@ -49,7 +52,7 @@ export default {
     },
     data() {
         return {
-            projects : null, //sampleProject.data, 
+            projects : [], //sampleProject.data, 
             popUp: false,
             itemPOPup : null,
         }
@@ -134,6 +137,11 @@ export default {
         font-size: 3.5rem;
 
     }
+    .emptyProjects{
+       font-size: 5rem;
+       text-align: center;
+       color: white;
+   }
     $colors: #29BEDF , #29DF5C, #DF2935;
     $repeat: 3;
 </style>

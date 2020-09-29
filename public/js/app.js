@@ -3013,6 +3013,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
  //import sampleProject from './sample-data/sampleProject.js'
 
@@ -3023,7 +3026,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      projects: null,
+      projects: [],
       //sampleProject.data, 
       popUp: false,
       itemPOPup: null
@@ -7788,7 +7791,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".container-content[data-v-6f990b30] {\n  display: flex;\n  flex: row;\n  flex-wrap: wrap;\n}\n.project-card[data-v-6f990b30] {\n  width: 32%;\n}\n.project-body[data-v-6f990b30] {\n  margin-top: 50px;\n}\n.add-button[data-v-6f990b30] {\n  position: fixed;\n  bottom: 50px;\n  right: 80px;\n}\n.ADDbutton[data-v-6f990b30] {\n  border: none;\n  background: #0C4AEB;\n  width: 90px;\n  height: 90px;\n  border-radius: 50%;\n  color: white;\n  font-size: 3.5rem;\n}", ""]);
+exports.push([module.i, ".container-content[data-v-6f990b30] {\n  display: flex;\n  flex: row;\n  flex-wrap: wrap;\n}\n.project-card[data-v-6f990b30] {\n  width: 32%;\n}\n.project-body[data-v-6f990b30] {\n  margin-top: 50px;\n}\n.add-button[data-v-6f990b30] {\n  position: fixed;\n  bottom: 50px;\n  right: 80px;\n}\n.ADDbutton[data-v-6f990b30] {\n  border: none;\n  background: #0C4AEB;\n  width: 90px;\n  height: 90px;\n  border-radius: 50%;\n  color: white;\n  font-size: 3.5rem;\n}\n.emptyProjects[data-v-6f990b30] {\n  font-size: 5rem;\n  text-align: center;\n  color: white;\n}", ""]);
 
 // exports
 
@@ -41331,14 +41334,24 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "container-content" },
-                _vm._l(_vm.projects, function(project) {
-                  return _c("ProjectCard", {
-                    key: project.id,
-                    staticClass: "project-card",
-                    attrs: { Project: project }
+                [
+                  _vm.projects.length === 0
+                    ? _c("div", { staticClass: "emptyProjects" }, [
+                        _vm._v(
+                          "\n                            NO Projects Here\n                        "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.projects, function(project) {
+                    return _c("ProjectCard", {
+                      key: project.id,
+                      staticClass: "project-card",
+                      attrs: { Project: project }
+                    })
                   })
-                }),
-                1
+                ],
+                2
               )
             ])
           ])
@@ -56585,8 +56598,6 @@ router.beforeEach(function (to, from, next) {
     return record.meta.requireAuth;
   })) {
     //check if user is Authenicated:
-    console.log("LA-".concat(userAuth));
-
     if (userAuth === 'false' || userAuth === null || userAuth === undefined) {
       //go to login page
       next({
