@@ -74,7 +74,7 @@ return [
             //'url' => env('DATABASE_URL'),
             'host' => $PRODUCTION_DB["host"],//env('DB_HOST', '127.0.0.1'),
             'port' => $PRODUCTION_DB["port"],//env('DB_PORT', '5432'),
-            'database' => substr($PRODUCTION_DB["path"], 1)//ltrim($PRODUCTION_DB["path"],"/"),//env('DB_DATABASE', 'forge'),
+            'database' => substr($PRODUCTION_DB["path"], 1),//ltrim($PRODUCTION_DB["path"],"/"),//env('DB_DATABASE', 'forge'),
             'username' => $PRODUCTION_DB["user"],//env('DB_USERNAME', 'forge'),
             'password' => $PRODUCTION_DB["pass"],//env('DB_PASSWORD', ''),
             'charset' => 'utf8',
