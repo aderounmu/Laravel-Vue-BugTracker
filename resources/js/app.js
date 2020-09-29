@@ -29,17 +29,26 @@ const routes = [
     {
         path: '/project', 
         name:'Project',
-        component: projects //require('./components/ApplicationComponent.vue')
+        component: projects, //require('./components/ApplicationComponent.vue')
+        meta:{
+            requireAuth: true,
+        }
     },
     {
         path: '/project/:id/bug', 
         name:'Bugs',
-        component: bugs //require('./components/ApplicationComponent.vue')
+        component: bugs, //require('./components/ApplicationComponent.vue')
+        meta:{
+            requireAuth: true,
+        }
     },
     {
         path: '/login',
         name:'login',
-        component: login
+        component: login,
+        meta:{
+            requireGuest: true
+        }
     },
     {
         path: '/test',
@@ -50,6 +59,45 @@ const routes = [
 
 const router = new VueRouter({
     routes : routes
+})
+
+//Router Authentication Guards 
+
+router.beforeEach((to,from,next)=>{
+
+    //console.log(sessionStorage.getItem('laravel-vue-bugtracker-loggedin'))            
+    let userAuth = sessionStorage.getItem('laravel-vue-bugtracker-loggedin')
+    //check if it has the AuthGuard
+    if(to.matched.some(record => record.meta.requireAuth)){
+        //check if user is Authenicated:
+        console.log(`LA-${userAuth}`)
+        if(userAuth === 'false' || userAuth === null || userAuth === undefined){
+            //go to login page
+            next({
+                path:'/login',
+                query:{
+                    type:'Login',
+                    redirect: to.fullPath,
+                }
+            })
+        }else{
+            //proceed to route 
+            next()
+        }
+
+    }else if(to.matched.some(record => record.meta.requireGuest)){
+        //check if use is Authenicated
+        
+        if(userAuth === 'true'){
+            next({
+                path:'/project'
+            })
+        }else{
+            next()
+        }
+    }else{
+        next()
+    }
 })
 
 /**

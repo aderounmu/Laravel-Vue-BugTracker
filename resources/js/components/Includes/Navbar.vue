@@ -36,11 +36,12 @@
 export default {
     methods:{
         logout(){
-            sessionStorage.removeItem('token')
-            sessionStorage.removeItem('name')
-            sessionStorage.removeItem('id')
-            sessionStorage.setItem('status','loggedout')
-            this.$router.push({name:'login'})
+            let my_project_name = 'laravel-vue-bugtracker'
+            sessionStorage.removeItem(`${my_project_name}-id`)
+            sessionStorage.removeItem(`${my_project_name}-name`)
+            sessionStorage.removeItem(`${my_project_name}-token`)
+            sessionStorage.setItem(`${my_project_name}-loggedin`,false)
+            this.$router.push('/login')
         }
     }
 }

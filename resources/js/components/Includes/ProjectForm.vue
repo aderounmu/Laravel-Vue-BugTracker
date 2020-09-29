@@ -41,12 +41,14 @@ export default {
         onSubmit(e){
             e.preventDefault()
             let api_token = null
+            
+
             if(this.isEditing == true){
                 //this.updateItem.updated_at = new Date.now();
             }else{
-                if(sessionStorage.getItem('status') !== null || sessionStorage.getItem('status') === "loggedin"){
-                    api_token = sessionStorage.getItem("token")
-                    let user = sessionStorage.getItem("id")
+                if(sessionStorage.getItem('laravel-vue-bugtracker-loggedin') === "true"){
+                    api_token = sessionStorage.getItem("laravel-vue-bugtracker-token")
+                    let user = sessionStorage.getItem("laravel-vue-bugtracker-id")
                     console.log(user)
                     this.updateItem.created_by = Number(user)
                     //creating a new project

@@ -84,26 +84,34 @@ export default {
                 body: JSON.stringify(this.loginDetails)
             })
             .then((response) => response.json())
+            .catch((error)=>{
+            
+                    console.error('Error:', error)
+                    return Promise.reject()
+                
+                
+            })
             .then((data)=>{
-                console.log('Success:', data)
+                //console.log('Success:', data)
                 this.loginDetails.email = ""
                 this.loginDetails.password = ""
-                if(data.message == "Login Successful"){
+                if(data.message === "Login Successful"){
                     this.isError = false
+                    this.resMessage = data.message
+                    let my_project_name = 'laravel-vue-bugtracker'
+                    sessionStorage.setItem(`${my_project_name}-id`,data.id)
+                    sessionStorage.setItem(`${my_project_name}-name`,data.name)
+                    sessionStorage.setItem(`${my_project_name}-token`,data.token)
+                    sessionStorage.setItem(`${my_project_name}-loggedin`,true)
+                    //make it push to previous page and not home
+                    this.$router.push({name:'Project'})
                 }else{
                     this.isError = true
+                    this.resMessage = data.message
                 }
-                this.resMessage = data.message
-               sessionStorage.setItem("id",data.id)
-               sessionStorage.setItem("name",data.name)
-               sessionStorage.setItem("token",data.token)
-               sessionStorage.setItem("status","loggedin")
-               //make it push to previous page and not home
-               this.$router.push({name:'home'})
+                
             })
-            .catch((error)=>{
-                console.error('Error:', error)
-            })
+            
 
         },
         registerUser(e){
@@ -132,9 +140,11 @@ export default {
                     this.resMessage = data.message
                     //sets login to session storage 
                     //local can also be used 
-                    sessionStorage.setItem("id",data.id)
-                    sessionStorage.setItem("name",data.name)
-                    sessionStorage.setItem("token",data.token)
+                    let my_project_name = 'laravel-vue-bugtracker'
+                    sessionStorage.setItem(`${my_project_name}-id`,data.id)
+                    sessionStorage.setItem(`${my_project_name}-name`,data.name)
+                    sessionStorage.setItem(`${my_project_name}-token`,data.token)
+                    sessionStorage.setItem(`${my_project_name}-loggedin`,true)
                 })
                 .catch((error)=>{
                     console.error('Error:', error)
@@ -224,10 +234,13 @@ export default {
 .login-header-item{
     color: white;
     cursor:pointer;
+    margin : 0px 20px 0px
 }
 
 .login-error-message{
     color: red;
+    text-align: center;
+    margin: 20px auto 0px;
 }
 .login-success-message{
     color: green

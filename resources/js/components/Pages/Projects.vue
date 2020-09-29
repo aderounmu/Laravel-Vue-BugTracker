@@ -88,10 +88,11 @@ export default {
     },
     computed: {
         HeaderName(){
-            if( sessionStorage.getItem('status') === null || sessionStorage.getItem('status') !== "loggedin"){
+            let userAuth = sessionStorage.getItem('laravel-vue-bugtracker-loggedin')
+            if(userAuth === 'false' || userAuth === null || userAuth === undefined){
                 return 'Guest'
             }else{
-                return sessionStorage.getItem('name')
+                return sessionStorage.getItem('laravel-vue-bugtracker-name')
             }
         }
     },

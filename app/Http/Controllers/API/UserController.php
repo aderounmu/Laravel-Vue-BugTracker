@@ -26,7 +26,7 @@ class UserController extends Controller
             $success['message'] = 'Login Successful';
             return response()->json($success);
         }else{
-            return response(['message' => 'Invalid login credentials'],400);
+            return response(['message' => 'Invalid login credentials'],403);
         }
     }
 
@@ -42,7 +42,7 @@ class UserController extends Controller
             return response([
                 'message' => 'Validation Error ',
                 'Error' => $validator->errors(),
-            ],400);
+            ],403);
         }else{
             $input = $request->all();
             $input['password'] = bcrypt($input['password']);

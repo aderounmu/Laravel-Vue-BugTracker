@@ -2165,9 +2165,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         var _api_token = ""; //adding a new bug 
 
-        if (sessionStorage.getItem('status') !== null || sessionStorage.getItem('status') === "loggedin") {
-          _api_token = sessionStorage.getItem("token");
-          var user = sessionStorage.getItem("id");
+        if (sessionStorage.getItem('laravel-vue-bugtracker-loggedin') === "true") {
+          _api_token = sessionStorage.getItem("laravel-vue-bugtracker-token");
+          var user = sessionStorage.getItem("laravel-vue-bugtracker-id");
           console.log(user);
           this.updateItem.created_by = Number(user); //adding a new bug 
 
@@ -2308,13 +2308,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     logout: function logout() {
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('name');
-      sessionStorage.removeItem('id');
-      sessionStorage.setItem('status', 'loggedout');
-      this.$router.push({
-        name: 'login'
-      });
+      var my_project_name = 'laravel-vue-bugtracker';
+      sessionStorage.removeItem("".concat(my_project_name, "-id"));
+      sessionStorage.removeItem("".concat(my_project_name, "-name"));
+      sessionStorage.removeItem("".concat(my_project_name, "-token"));
+      sessionStorage.setItem("".concat(my_project_name, "-loggedin"), false);
+      this.$router.push('/login');
     }
   }
 });
@@ -2509,9 +2508,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.isEditing == true) {//this.updateItem.updated_at = new Date.now();
       } else {
-        if (sessionStorage.getItem('status') !== null || sessionStorage.getItem('status') === "loggedin") {
-          api_token = sessionStorage.getItem("token");
-          var user = sessionStorage.getItem("id");
+        if (sessionStorage.getItem('laravel-vue-bugtracker-loggedin') === "true") {
+          api_token = sessionStorage.getItem("laravel-vue-bugtracker-token");
+          var user = sessionStorage.getItem("laravel-vue-bugtracker-id");
           console.log(user);
           this.updateItem.created_by = Number(user); //creating a new project
 
@@ -2883,28 +2882,30 @@ __webpack_require__.r(__webpack_exports__);
         body: JSON.stringify(this.loginDetails)
       }).then(function (response) {
         return response.json();
+      })["catch"](function (error) {
+        console.error('Error:', error);
+        return Promise.reject();
       }).then(function (data) {
-        console.log('Success:', data);
+        //console.log('Success:', data)
         _this.loginDetails.email = "";
         _this.loginDetails.password = "";
 
-        if (data.message == "Login Successful") {
+        if (data.message === "Login Successful") {
           _this.isError = false;
+          _this.resMessage = data.message;
+          var my_project_name = 'laravel-vue-bugtracker';
+          sessionStorage.setItem("".concat(my_project_name, "-id"), data.id);
+          sessionStorage.setItem("".concat(my_project_name, "-name"), data.name);
+          sessionStorage.setItem("".concat(my_project_name, "-token"), data.token);
+          sessionStorage.setItem("".concat(my_project_name, "-loggedin"), true); //make it push to previous page and not home
+
+          _this.$router.push({
+            name: 'Project'
+          });
         } else {
           _this.isError = true;
+          _this.resMessage = data.message;
         }
-
-        _this.resMessage = data.message;
-        sessionStorage.setItem("id", data.id);
-        sessionStorage.setItem("name", data.name);
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("status", "loggedin"); //make it push to previous page and not home
-
-        _this.$router.push({
-          name: 'home'
-        });
-      })["catch"](function (error) {
-        console.error('Error:', error);
       });
     },
     registerUser: function registerUser(e) {
@@ -2937,9 +2938,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.resMessage = data.message; //sets login to session storage 
           //local can also be used 
 
-          sessionStorage.setItem("id", data.id);
-          sessionStorage.setItem("name", data.name);
-          sessionStorage.setItem("token", data.token);
+          var my_project_name = 'laravel-vue-bugtracker';
+          sessionStorage.setItem("".concat(my_project_name, "-id"), data.id);
+          sessionStorage.setItem("".concat(my_project_name, "-name"), data.name);
+          sessionStorage.setItem("".concat(my_project_name, "-token"), data.token);
+          sessionStorage.setItem("".concat(my_project_name, "-loggedin"), true);
         })["catch"](function (error) {
           console.error('Error:', error);
         });
@@ -3058,10 +3061,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     HeaderName: function HeaderName() {
-      if (sessionStorage.getItem('status') === null || sessionStorage.getItem('status') !== "loggedin") {
+      var userAuth = sessionStorage.getItem('laravel-vue-bugtracker-loggedin');
+
+      if (userAuth === 'false' || userAuth === null || userAuth === undefined) {
         return 'Guest';
       } else {
-        return sessionStorage.getItem('name');
+        return sessionStorage.getItem('laravel-vue-bugtracker-name');
       }
     }
   },
@@ -7878,7 +7883,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.login-container[data-v-c6be05ba]{\r\n    display: flex;\r\n    height: 70vh;\r\n    justify-content: center;\r\n    flex-direction: column;\r\n    align-items: center;\n}\r\n\r\n/* .login-header-content{\r\n    display: flex;\r\n    flex-direction: row\r\n} */\n.header-links-content[data-v-c6be05ba]{\r\n    display: flex;\r\n    flex-direction: row;\r\n    color:white;\n}\n.login-header-content p[data-v-c6be05ba] {\r\n    /*width: 50%;*/\r\n    flex: 2,\n}\n.login-content[data-v-c6be05ba]{\r\n   \r\n    border-radius: 10px;\r\n    width: 50%;\r\n    margin: 20px;\r\n    display: flex;\r\n    justify-content: center;\n}\n.login-item[data-v-c6be05ba]{\r\n    width: 100%;\r\n    margin: 10px 30px;\r\n    padding: 10px 5px;\r\n    border-radius: 5px;\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-webkit-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-moz-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]:-ms-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-ms-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::placeholder{\r\n    color: white;\n}\n.login-input[data-v-c6be05ba]{\r\n    outline: none;\r\n    border: none;\r\n    background-color: #353535;\r\n    padding-left: 10px;\n}\n.login-button[data-v-c6be05ba]{\r\n    border: none;\r\n    outline: none;\r\n    background-color: #000000\n}\n.item-container[data-v-c6be05ba]{\r\n    width: 100%;\n}\n.highlight[data-v-c6be05ba]{\r\n    border-bottom: 3px solid #000000\n}\n.login-header-item[data-v-c6be05ba]{\r\n    color: white;\r\n    cursor:pointer;\n}\n.login-error-message[data-v-c6be05ba]{\r\n    color: red;\n}\n.login-success-message[data-v-c6be05ba]{\r\n    color: green\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.login-container[data-v-c6be05ba]{\r\n    display: flex;\r\n    height: 70vh;\r\n    justify-content: center;\r\n    flex-direction: column;\r\n    align-items: center;\n}\r\n\r\n/* .login-header-content{\r\n    display: flex;\r\n    flex-direction: row\r\n} */\n.header-links-content[data-v-c6be05ba]{\r\n    display: flex;\r\n    flex-direction: row;\r\n    color:white;\n}\n.login-header-content p[data-v-c6be05ba] {\r\n    /*width: 50%;*/\r\n    flex: 2,\n}\n.login-content[data-v-c6be05ba]{\r\n   \r\n    border-radius: 10px;\r\n    width: 50%;\r\n    margin: 20px;\r\n    display: flex;\r\n    justify-content: center;\n}\n.login-item[data-v-c6be05ba]{\r\n    width: 100%;\r\n    margin: 10px 30px;\r\n    padding: 10px 5px;\r\n    border-radius: 5px;\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-webkit-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-moz-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]:-ms-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::-ms-input-placeholder{\r\n    color: white;\n}\n.login-item[data-v-c6be05ba]::placeholder{\r\n    color: white;\n}\n.login-input[data-v-c6be05ba]{\r\n    outline: none;\r\n    border: none;\r\n    background-color: #353535;\r\n    padding-left: 10px;\n}\n.login-button[data-v-c6be05ba]{\r\n    border: none;\r\n    outline: none;\r\n    background-color: #000000\n}\n.item-container[data-v-c6be05ba]{\r\n    width: 100%;\n}\n.highlight[data-v-c6be05ba]{\r\n    border-bottom: 3px solid #000000\n}\n.login-header-item[data-v-c6be05ba]{\r\n    color: white;\r\n    cursor:pointer;\r\n    margin : 0px 20px 0px\n}\n.login-error-message[data-v-c6be05ba]{\r\n    color: red;\r\n    text-align: center;\r\n    margin: 20px auto 0px;\n}\n.login-success-message[data-v-c6be05ba]{\r\n    color: green\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -56543,17 +56548,26 @@ var routes = [{
 }, {
   path: '/project',
   name: 'Project',
-  component: _components_Pages_Projects_vue__WEBPACK_IMPORTED_MODULE_2__["default"] //require('./components/ApplicationComponent.vue')
-
+  component: _components_Pages_Projects_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+  //require('./components/ApplicationComponent.vue')
+  meta: {
+    requireAuth: true
+  }
 }, {
   path: '/project/:id/bug',
   name: 'Bugs',
-  component: _components_Pages_Bugs_vue__WEBPACK_IMPORTED_MODULE_4__["default"] //require('./components/ApplicationComponent.vue')
-
+  component: _components_Pages_Bugs_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  //require('./components/ApplicationComponent.vue')
+  meta: {
+    requireAuth: true
+  }
 }, {
   path: '/login',
   name: 'login',
-  component: _components_Pages_Login_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_Pages_Login_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+  meta: {
+    requireGuest: true
+  }
 }, {
   path: '/test',
   name: 'test',
@@ -56561,6 +56575,45 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes
+}); //Router Authentication Guards 
+
+router.beforeEach(function (to, from, next) {
+  //console.log(sessionStorage.getItem('laravel-vue-bugtracker-loggedin'))            
+  var userAuth = sessionStorage.getItem('laravel-vue-bugtracker-loggedin'); //check if it has the AuthGuard
+
+  if (to.matched.some(function (record) {
+    return record.meta.requireAuth;
+  })) {
+    //check if user is Authenicated:
+    console.log("LA-".concat(userAuth));
+
+    if (userAuth === 'false' || userAuth === null || userAuth === undefined) {
+      //go to login page
+      next({
+        path: '/login',
+        query: {
+          type: 'Login',
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      //proceed to route 
+      next();
+    }
+  } else if (to.matched.some(function (record) {
+    return record.meta.requireGuest;
+  })) {
+    //check if use is Authenicated
+    if (userAuth === 'true') {
+      next({
+        path: '/project'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 /**
  * The following block of code may be used to automatically register your
