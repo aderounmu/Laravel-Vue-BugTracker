@@ -47,7 +47,7 @@ Route::get('test','API\UserController@test');
 //});
 
 
-Route::group(['middleware' => ['auth:api'],/*'scheme' => 'https']*/, function () {
+Route::group(['middleware' => ['auth:api'],/*'scheme' => 'https'*/], function () {
   //create a project 
   Route::post('project','API\ProjectController@store');
   //update a project 
