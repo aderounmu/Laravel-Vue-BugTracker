@@ -85,11 +85,8 @@ export default {
             })
             .then((response) => response.json())
             .catch((error)=>{
-            
                     console.error('Error:', error)
                     return Promise.reject()
-                
-                
             })
             .then((data)=>{
                 //console.log('Success:', data)

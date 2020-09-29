@@ -70,7 +70,7 @@ router.beforeEach((to,from,next)=>{
     //check if it has the AuthGuard
     if(to.matched.some(record => record.meta.requireAuth)){
         //check if user is Authenicated:
-        console.log(`LA-${userAuth}`)
+        
         if(userAuth === 'false' || userAuth === null || userAuth === undefined){
             //go to login page
             next({
