@@ -21,6 +21,12 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: echo world
+  say-name:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo $MY_NAME
+
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -33,6 +39,9 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+        
+  
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -41,6 +50,7 @@ workflows:
     jobs:
       - say-hello
       - print_hello
+      - say-name
       - print_world:
           requires:
             - print_hello
